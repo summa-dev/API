@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "dependencies": {
+    "commander": "^9.5.0",
+    "csv-parser": "^3.0.0",
+    "ts-merkle-sum-tree": "^0.0.6"
+  }
+}
