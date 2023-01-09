@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 const program = new Command();
 import initSmt from './init-mst.js';
-import genProof from './gen-proof.js';
+import createProofWithTargetSumFromTreePath from './gen-proof.js';
 
 program
   .name('pan-y-tomate-pos-demo')
@@ -48,7 +48,7 @@ program.command('gen-proof')
       throw new Error('The output file is not a json file')
   }
 
-  genProof(pathToTree, pathToProof, index, targetSum);
+  createProofWithTargetSumFromTreePath(pathToTree, pathToProof, index, targetSum);
 
 });
 

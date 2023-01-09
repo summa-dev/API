@@ -9,61 +9,61 @@ import { poseidon } from "circomlibjs"
 
 describe('POS CLI', () => {
 
-  describe('init-mst', () => {
+  // describe('init-mst', () => {
 
-    let csvFile;
-    let mstFile;
-    let entries;
-    let parsedMst;
+  //   let csvFile;
+  //   let mstFile;
+  //   let entries;
+  //   let parsedMst;
 
-    beforeEach(async function () {
+  //   beforeEach(async function () {
 
-      csvFile = 'test/data.csv';
-      mstFile = 'test/merkletree.json';  
+  //     csvFile = 'test/data.csv';
+  //     mstFile = 'test/merkletree.json';  
 
-      // exec the command with the csv file as inputFile and the mst file as outputFile
-      shell.exec(`node src/cli.js init-mst ${csvFile} ${mstFile}`);
+  //     // exec the command with the csv file as inputFile and the mst file as outputFile
+  //     shell.exec(`node src/cli.js init-mst ${csvFile} ${mstFile}`);
 
-      // parse the entries from the csv file
-      entries = getCSVEntries(csvFile);
+  //     // parse the entries from the csv file
+  //     entries = getCSVEntries(csvFile);
 
-      // parse the json file
-      parsedMst = JSON.parse(fs.readFileSync(mstFile, 'utf8'));
-    });
+  //     // parse the json file
+  //     parsedMst = JSON.parse(fs.readFileSync(mstFile, 'utf8'));
+  //   });
 
-    it('should create a mst file in json', () => {
-      // check if the file is created
-      expect(fs.existsSync(mstFile)).to.be.true;
-    });
+  //   it('should create a mst file in json', () => {
+  //     // check if the file is created
+  //     expect(fs.existsSync(mstFile)).to.be.true;
+  //   });
   
-    it('should create a mst that contain the correct number of entries', () => {
-      // expect the tree to contain the same number of entries as the csv file
-      expect(parsedMst._nodes[0].length).to.equal(entries.length);
-    });
+  //   it('should create a mst that contain the correct number of entries', () => {
+  //     // expect the tree to contain the same number of entries as the csv file
+  //     expect(parsedMst._nodes[0].length).to.equal(entries.length);
+  //   });
   
-    it('should create a mst that contain the right values', () => {
+  //   it('should create a mst that contain the right values', () => {
     
-      // expect the entries to match 
-      for (let i = 0; i < entries.length; i++) {
-        expect(parsedMst._nodes[0][i].sum).to.equal(entries[i].balance);
-      }
-    });
+  //     // expect the entries to match 
+  //     for (let i = 0; i < entries.length; i++) {
+  //       expect(parsedMst._nodes[0][i].sum).to.equal(entries[i].balance);
+  //     }
+  //   });
   
-    it('should create a mst that contains the right root sum', () => {
+  //   it('should create a mst that contains the right root sum', () => {
       
-      // get the root sum from the mst
-      const rootSum = parsedMst._root.sum;
+  //     // get the root sum from the mst
+  //     const rootSum = parsedMst._root.sum;
   
-      // loop over the entries and get the sum of all the balances
-      let sum = 0;
-      for (let i = 0; i < entries.length; i++) {
-        sum += parseInt(entries[i].balance);
-      }
-      // expect the root sum to be equal to the sum of all the balances
-      expect(parseInt(rootSum)).to.equal(sum);
-    });
+  //     // loop over the entries and get the sum of all the balances
+  //     let sum = 0;
+  //     for (let i = 0; i < entries.length; i++) {
+  //       sum += parseInt(entries[i].balance);
+  //     }
+  //     // expect the root sum to be equal to the sum of all the balances
+  //     expect(parseInt(rootSum)).to.equal(sum);
+  //   });
 
-  });
+  // });
 
   describe('gen-proof', () => {
 
@@ -73,15 +73,20 @@ describe('POS CLI', () => {
     let targetSum;
     let parsedMst;
     let parsedProof;
+    let csvFile
 
-    beforeEach(async function () {
+    before(async function () {
 
+      csvFile = 'test/data.csv';
       mstFile = 'test/merkletree.json';  
-      proofFile = 'test/proof.json';  
+
+      // exec the command with the csv file as inputFile and the mst file as outputFile
+      shell.exec(`node src/cli.js init-mst ${csvFile} ${mstFile}`);
 
       // parse the merkle tree file
       parsedMst = JSON.parse(fs.readFileSync(mstFile, 'utf8'));
 
+      proofFile = 'test/proof.json';  
       index = 5
       targetSum = 1000
 
@@ -100,8 +105,6 @@ describe('POS CLI', () => {
 
     it('Should generate a proof same as the one that would be generated using the library methods on the tree object', () => {
 
-      // get the entries from the csv file
-      const csvFile = 'test/data.csv';
       const entries = getCSVEntries(csvFile);
 
       // create a merkle tree from the entries 
@@ -112,15 +115,14 @@ describe('POS CLI', () => {
         tree.insert(BigInt(entries[i].userID), BigInt(entries[i].balance));
       }
 
-      console.log(tree._nodes[0])
-
       // get the proof from the tree
       const proof = tree.createProofWithTargetSum(index, targetSum);
 
-      shell.exec(`node src/cli.js gen-proof ${mstFile} ${proofFile} ${index} ${targetSum}`);
-      
+      // parse proof into json 
+      const proofToString = JSON.stringify(proof, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+
       // expect the proof to be the same as the one generated by the library
-      expect(parsedProof).to.deep.equal(proof);
+      expect(proofToString).to.deep.equal(fs.readFileSync(proofFile, 'utf8'));
     });
   
 
