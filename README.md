@@ -21,3 +21,6 @@ CLI to demo POS
 
 
 - [ ] Remove csv parser from dep
+- [ ] Set Height of the MT
+- [ ] Add gitignore 
+- [ ] Cleanup package.json

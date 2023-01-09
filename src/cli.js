@@ -9,7 +9,6 @@ program
   .version('0.0.1');
 
 
-// set height of the mt
 program.command('init-mst')
     .description('Initialize the MST')
     .argument('path/to/input/csv/file', 'Path to the csv file that stores the entries')
@@ -29,7 +28,6 @@ program.command('init-mst')
       initSmt(pathToCsv, pathToTree);
     });
 
-// set target sum and index
 program.command('gen-proof')
 .description('Generate the proof for a specific entry in the tree')
 .argument('path/to/input/json/file', 'Path to the json file that stores the tree')
@@ -49,7 +47,6 @@ program.command('gen-proof')
   }
 
   createProofWithTargetSumFromTreePath(pathToTree, pathToProof, index, targetSum);
-
 });
 
 // program.command('gen-proof')

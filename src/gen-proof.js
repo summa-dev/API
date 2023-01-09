@@ -43,7 +43,6 @@ export default function createProofWithTargetSumFromTreePath(
     index = Math.floor(index / parsedMst._arity);
 }
 
-
   const proof = { 
     rootHash: parsedMst._root.hash,
     targetSum,
