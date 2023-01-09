@@ -18,3 +18,6 @@ CLI to demo POS
 - Create a csv file. Entries should be in the format of `user_id,amount` (see `data.csv` for example)
 
 ### Benchmark
+
+
+- [ ] Remove csv parser from dep

@@ -9,6 +9,7 @@ program
   .version('0.0.1');
 
 
+// set height of the mt
 program.command('init-mst')
     .description('Initialize the MST')
     .argument('path/to/input/csv/file', 'Path to the csv file that stores the entries')
@@ -48,6 +49,7 @@ program.command('gen-proof')
   }
 
   genProof(pathToTree, pathToProof, index, targetSum);
+
 });
 
 // program.command('gen-proof')
