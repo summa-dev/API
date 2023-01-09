@@ -6,22 +6,21 @@ import fs from 'fs'
 import csv from 'csv-parser'
 
 
-export default async function initMST() {
-
+export default function initMST(pathToCsv, pathToTree) {
     // Create tree and insert 10 leaves
     let tree = new IncrementalMerkleSumTree(poseidon, 16) // Binary tree with 16 levels and poseidon hash function
 
-    fs.createReadStream('data.csv')
+
+    fs.createReadStream(pathToCsv)
     .pipe(csv())
     .on('data', (data) => {
         // insert the data in the tree
         tree.insert(BigInt(data.userID), BigInt(data.balance))
     })
-    .on('end', () => {       
-        const treeToJson = JSON.stringify(tree, (_, v) => typeof v === 'bigint' ? v.toString() : v)
-        fs.writeFileSync('tree.json', treeToJson)
-      });
-      
+    .on('end', () => {
+        // store the tree in a json file
+        fs.writeFileSync(pathToTree, JSON.stringify(tree, (_, v) => typeof v === 'bigint' ? v.toString() : v))
+    });
 };
 
 

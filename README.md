@@ -13,5 +13,8 @@ CLI to demo POS
 2. Generate a proof for a specific user 
 3. Verify the proof for a specific user
 
-
 ### Setup
+
+- Create a csv file. Entries should be in the format of `user_id,amount` (see `data.csv` for example)
+
+### Benchmark

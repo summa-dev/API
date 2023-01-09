@@ -1,8 +1,11 @@
 {
   "type": "module",
   "dependencies": {
+    "chai": "^4.3.7",
     "commander": "^9.5.0",
     "csv-parser": "^3.0.0",
-    "ts-merkle-sum-tree": "^0.0.6"
+    "shelljs": "^0.8.5",
+    "ts-merkle-sum-tree": "^0.0.6",
+    "yargs": "^17.6.2"
   }
 }
