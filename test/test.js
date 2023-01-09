@@ -66,3 +66,8 @@ describe('POS CLI', () => {
 
 });
 
+
+// 2nd category of testing => MT proof creation
+
+// Should throw an error if the index doesn't exist in the tree
+// Should generate a proof same as the one that would be generated using the library methods on the tree object

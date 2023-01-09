@@ -1,8 +1,7 @@
 import { Command } from 'commander';
 const program = new Command();
 import initSmt from './init-mst.js';
-
-let tree;
+import genProof from './gen-proof.js';
 
 program
   .name('pan-y-tomate-pos-demo')
@@ -10,7 +9,6 @@ program
   .version('0.0.1');
 
 
-// Add path where to store the tree
 program.command('init-mst')
     .description('Initialize the MST')
     .argument('path/to/input/csv/file', 'Path to the csv file that stores the entries')
@@ -29,6 +27,28 @@ program.command('init-mst')
 
       initSmt(pathToCsv, pathToTree);
     });
+
+// set target sum and index
+program.command('gen-proof')
+.description('Generate the proof for a specific entry in the tree')
+.argument('path/to/input/json/file', 'Path to the json file that stores the tree')
+.argument('path/to/output/proof/file', 'Path to the json file where to store the proof')
+.argument('index', 'index of the entry in the tree to generate the proof for')
+.argument('target sum', 'target sum to generate the proof for')
+.action((pathToTree, pathToProof, index, targetSum) => {
+
+  // check that pathToTree is a json File
+  if (!pathToTree.endsWith('.json')) {
+      throw new Error('The output file is not a json file')
+  }
+
+  // check that pathToProof is a json File
+  if (!pathToProof.endsWith('.json')) {
+      throw new Error('The output file is not a json file')
+  }
+
+  genProof(pathToTree, pathToProof, index, targetSum);
+});
 
 // program.command('gen-proof')
 //     .description('Generate DVP')
