@@ -1,4 +1,4 @@
-# POS-CLI
+# zk-pos-cli
 
 Command Line Interface to use the pan-y-tomate Proof Of Solvency Tooling. You only need to provide a csv file with the user_id and the amount of tokens they hold and the CLI will generate a proof for each user and verify it.
 
@@ -36,7 +36,7 @@ Starting from the proof provided as input (`proof.json`) and the public signals 
 ## Core Deps
 
 - [ts-merkle-sum-tree](https://github.com/pan-y-tomate/ts-merkle-sum-tree), APIs to create merkle sum tree in Typescript
-- [zk-proof-of-solvency-prover](https://github.com/pan-y-tomate/zk-proof-of-solvency-prover), zkSNARK proving system for Proof Of Solvency.
+- [zk-prover](https://github.com/pan-y-tomate/zk-prover), zkSNARK proving system for Proof Of Solvency.
 
 ### To-dos
 
@@ -49,17 +49,4 @@ Starting from the proof provided as input (`proof.json`) and the public signals 
 - [x] Prettify
 - [ ] Specify where the artifcats come from
 - [ ] Fix path in testing for new folder structure
-- [ ] Change repo name in the package.json as well
-
-{
-  "dependencies": {
-    "chai": "^4.3.7",
-    "commander": "^9.5.0",
-    "shelljs": "^0.8.5",
-    "snarkjs": "^0.5.0",
-    "ts-merkle-sum-tree": "^0.0.6"
-  },
-  "devDependencies": {
-    "prettier": "2.8.2"
-  }
-}
+- [x] Change repo name in the package.json as well

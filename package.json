@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pan-y-tomate/POS-CLI.git"
+    "url": "git+https://github.com/pan-y-tomate/zk-pos-cli.git"
   },
   "author": "Enrico Bottazzi",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/pan-y-tomate/POS-CLI/issues"
+    "url": "https://github.com/pan-y-tomate/zk-pos-cli/issues"
   },
-  "homepage": "https://github.com/pan-y-tomate/POS-CLI#readme"
+  "homepage": "https://github.com/pan-y-tomate/zk-pos-cli#readme"
 }
