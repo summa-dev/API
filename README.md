@@ -53,16 +53,3 @@ Does this match your balance in the exchange? 665
 ```bash
 $ npm run test
 ```
-
-### To-dos
-
-- [x] Remove csv parser from dep
-- [x] Set Height of the MT
-- [x] Add gitignore
-- [x] Cleanup package.json
-- [x] Change generate proof such that it generates a circom proof
-- [x] Add verify proof function
-- [x] Prettify
-- [x] Specify where the artifcats come from
-- [x] Fix path in testing for new folder structure
-- [x] Change repo name in the package.json as well
