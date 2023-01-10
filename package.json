@@ -8,5 +8,25 @@
   },
   "devDependencies": {
     "prettier": "2.8.2"
-  }
+  },
+  "name": "zk-pos-cli",
+  "description": "Command Line Interface to use the pan-y-tomate Proof Of Solvency Tooling. You only need to provide a csv file with the user_id and the amount of tokens they hold and the CLI will generate a proof for each user and verify it.",
+  "version": "0.0.1",
+  "main": "src/cli.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pan-y-tomate/POS-CLI.git"
+  },
+  "author": "Enrico Bottazzi",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pan-y-tomate/POS-CLI/issues"
+  },
+  "homepage": "https://github.com/pan-y-tomate/POS-CLI#readme"
 }

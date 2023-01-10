@@ -40,12 +40,26 @@ Starting from the proof provided as input (`proof.json`) and the public signals 
 
 ### To-dos
 
-- [ ] Remove csv parser from dep
+- [x] Remove csv parser from dep
 - [ ] Set Height of the MT
-- [ ] Add gitignore
-- [ ] Cleanup package.json
+- [x] Add gitignore
+- [x] Cleanup package.json
 - [x] Change generate proof such that it generates a circom proof
 - [x] Add verify proof function
 - [x] Prettify
 - [ ] Specify where the artifcats come from
-- [ ] Fix path in testing for new folder structure 
+- [ ] Fix path in testing for new folder structure
+- [ ] Change repo name in the package.json as well
+
+{
+  "dependencies": {
+    "chai": "^4.3.7",
+    "commander": "^9.5.0",
+    "shelljs": "^0.8.5",
+    "snarkjs": "^0.5.0",
+    "ts-merkle-sum-tree": "^0.0.6"
+  },
+  "devDependencies": {
+    "prettier": "2.8.2"
+  }
+}
