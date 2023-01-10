@@ -12,7 +12,7 @@ The CLI comprises of three execs:
 $ node src/cli init-mst data.csv mst.json
 ```
 
-Parse the csv file provided as input (`data.csv`) into a Merkle Sum Tree and saves it in a json file provided as output `mst.json`
+Parse the csv file provided as input (`data.csv`) into a Merkle Sum Tree and saves it in a json file provided as output `mst.json`. The csv file should be in the format of `userID,balance` (see `data.csv` for example).
 
 **`gen-proof`**
 
@@ -33,22 +33,12 @@ $ node src/cli verify-proof proof.json public.json
 
 Starting from the proof provided as input (`proof.json`) and the public signals provided as input (`public.json`), the user can verify their own proof. The user is still required to check whether the public signals are correct.
 
-### Core Libraries
+## Core Deps
 
-- TS Merkle Sum Tree
-- POS circuit (submodule)
+- [ts-merkle-sum-tree](https://github.com/pan-y-tomate/ts-merkle-sum-tree), APIs to create merkle sum tree in Typescript
+- [zk-proof-of-solvency-prover](https://github.com/pan-y-tomate/zk-proof-of-solvency-prover), zkSNARK proving system for Proof Of Solvency. 
 
-### Functions 
-
-1. Init the Merkle Sum Tree
-2. Generate a proof for a specific user 
-3. Verify the proof for a specific user
-
-### Setup
-
-- Create a csv file. Entries should be in the format of `user_id,amount` (see `data.csv` for example)
-
-### Benchmark
+### To-dos
 
 - [ ] Remove csv parser from dep
 - [ ] Set Height of the MT
