@@ -1,4 +1,4 @@
-import fs from 'fs';
+const fs = require('fs');
 
 function getCSVEntries(path) {
 
@@ -26,5 +26,5 @@ function getCSVEntries(path) {
 }
 
 // export function
-export default getCSVEntries;
+module.exports = getCSVEntries;
 

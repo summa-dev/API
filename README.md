@@ -24,3 +24,9 @@ CLI to demo POS
 - [ ] Set Height of the MT
 - [ ] Add gitignore 
 - [ ] Cleanup package.json
+- [ ] Change generate proof such that it generates a circom proof 
+- [ ] Add verify proof function
+- [ ] Prettify
+- [ ] Specify where the artifcats come from
+- [ ] Fix path in testing
+
