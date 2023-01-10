@@ -44,8 +44,8 @@ Starting from the proof provided as input (`proof.json`) and the public signals 
 - [ ] Set Height of the MT
 - [ ] Add gitignore
 - [ ] Cleanup package.json
-- [ ] Change generate proof such that it generates a circom proof
-- [ ] Add verify proof function
-- [ ] Prettify
+- [x] Change generate proof such that it generates a circom proof
+- [x] Add verify proof function
+- [x] Prettify
 - [ ] Specify where the artifcats come from
-- [ ] Fix path in testing
+- [ ] Fix path in testing for new folder structure 
