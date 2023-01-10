@@ -4,9 +4,9 @@ const { IncrementalMerkleSumTree } = require("ts-merkle-sum-tree");
 const { poseidon } = require("circomlibjs");
 const fs = require("fs");
 
-function initMST(entries, pathToTree, treeHeight) {
+function initMST(entries, pathToTree) {
   // Create tree and insert 10 leaves
-  let tree = new IncrementalMerkleSumTree(poseidon, treeHeight); // Binary tree with height = treeHeight and poseidon hash function
+  let tree = new IncrementalMerkleSumTree(poseidon, 16); // Binary tree with height = 16 by default and poseidon hash function
 
   // add the entries to the tree
   for (let i = 0; i < entries.length; i++) {

@@ -61,9 +61,6 @@ describe("POS CLI proof", function async() {
   let csvFile;
   let mstFile;
 
-  let proofFile;
-  let publicFile;
-
   let entries;
 
   before(async function () {
@@ -71,11 +68,6 @@ describe("POS CLI proof", function async() {
     // the total liabilities from the csv file is 4824
     csvFile = "test/data.csv";
     mstFile = "test/merkletree.json";
-
-    proofFile = "test/proof.json";
-    publicFile = "test/public.json";
-
-    proofFile = "test/proof.json";
 
     entries = getCSVEntries(csvFile);
 
@@ -85,7 +77,7 @@ describe("POS CLI proof", function async() {
     // targetSum > total liabilities
     for (let i = 0; i < entries.length; i++) {
       shell.exec(
-        `node src/cli.js gen-proof ${mstFile} test/proof${i}.json test/public${i}.json ${i} ${targetSum}`
+        `node src/cli.js gen-proof ${mstFile} test/examples/proof${i}.json test/examples/public${i}.json ${i} ${targetSum}`
       );
     }
   });
@@ -93,8 +85,8 @@ describe("POS CLI proof", function async() {
   it("should create a proof file in json", () => {
     // check if the file is created
     for (let i = 0; i < entries.length; i++) {
-      expect(fs.existsSync(`test/proof${i}.json`)).to.be.true;
-      expect(fs.existsSync(`test/public${i}.json`)).to.be.true;
+      expect(fs.existsSync(`test/examples/proof${i}.json`)).to.be.true;
+      expect(fs.existsSync(`test/examples/public${i}.json`)).to.be.true;
     }
   });
 
@@ -103,7 +95,7 @@ describe("POS CLI proof", function async() {
     for (let i = 0; i < entries.length; i++) {
       expect(() => {
         shell.exec(
-          `node src/cli.js verify-proof test/proof${i}.json test/public${i}.json`
+          `node src/cli.js verify-proof test/examples/proof${i}.json test/examples/public${i}.json`
         );
       }).to.not.throw();
     }

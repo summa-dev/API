@@ -35,10 +35,10 @@ program
 
     const entries = getCSVEntries(pathToCsv);
     
-    // get the height of the tree 
-    const treeHeight = Math.ceil(Math.log2(entries.length));
+    // // get the height of the tree. For now it support height of 16 only.
+    // const treeHeight = Math.ceil(Math.log2(entries.length));
 
-    initSmt(entries, pathToTree, treeHeight);
+    initSmt(entries, pathToTree);
   });
 
 program
