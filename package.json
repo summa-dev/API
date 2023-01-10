@@ -7,5 +7,8 @@
     "snarkjs": "^0.5.0",
     "ts-merkle-sum-tree": "^0.0.6",
     "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "prettier": "2.8.2"
   }
 }

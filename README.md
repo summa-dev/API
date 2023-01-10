@@ -4,7 +4,7 @@ Command Line Interface to use the pan-y-tomate Proof Of Solvency Tooling. You on
 
 ## Usage
 
-The CLI comprises of three execs: 
+The CLI comprises of three execs:
 
 **`init-mst`**
 
@@ -20,7 +20,7 @@ Parse the csv file provided as input (`data.csv`) into a Merkle Sum Tree and sav
 $ node src/cli gen-proof mst.json proof.json public.json 1 2000
 ```
 
-Starting from the data structure provided as input (`mst.json`), generate a proof for the user with index `1` in the csv file. The total assets held by the exchange is `2000`. 
+Starting from the data structure provided as input (`mst.json`), generate a proof for the user with index `1` in the csv file. The total assets held by the exchange is `2000`.
 The proof is saved in a json file provided as output (`proof.json`). The public signals is also saved in a json file provided as output (`public.json`)
 
 > Note that the `index` is not the same as the `userID`. The `index` is the position of the user in the csv file. The first user will have index 0, an so on... The `userID` is the value of the first column of the csv file.
@@ -36,17 +36,16 @@ Starting from the proof provided as input (`proof.json`) and the public signals 
 ## Core Deps
 
 - [ts-merkle-sum-tree](https://github.com/pan-y-tomate/ts-merkle-sum-tree), APIs to create merkle sum tree in Typescript
-- [zk-proof-of-solvency-prover](https://github.com/pan-y-tomate/zk-proof-of-solvency-prover), zkSNARK proving system for Proof Of Solvency. 
+- [zk-proof-of-solvency-prover](https://github.com/pan-y-tomate/zk-proof-of-solvency-prover), zkSNARK proving system for Proof Of Solvency.
 
 ### To-dos
 
 - [ ] Remove csv parser from dep
 - [ ] Set Height of the MT
-- [ ] Add gitignore 
+- [ ] Add gitignore
 - [ ] Cleanup package.json
-- [ ] Change generate proof such that it generates a circom proof 
+- [ ] Change generate proof such that it generates a circom proof
 - [ ] Add verify proof function
 - [ ] Prettify
 - [ ] Specify where the artifcats come from
 - [ ] Fix path in testing
-
