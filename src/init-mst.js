@@ -3,14 +3,10 @@
 const { IncrementalMerkleSumTree } = require("ts-merkle-sum-tree");
 const { poseidon } = require("circomlibjs");
 const fs = require("fs");
-const getCSVEntries = require("../utils/csv.js");
 
-function initMST(pathToCsv, pathToTree) {
+function initMST(entries, pathToTree, treeHeight) {
   // Create tree and insert 10 leaves
-  let tree = new IncrementalMerkleSumTree(poseidon, 16); // Binary tree with 16 levels and poseidon hash function
-
-  // read the csv file and insert the data in the tree
-  const entries = getCSVEntries(pathToCsv);
+  let tree = new IncrementalMerkleSumTree(poseidon, treeHeight); // Binary tree with height = treeHeight and poseidon hash function
 
   // add the entries to the tree
   for (let i = 0; i < entries.length; i++) {

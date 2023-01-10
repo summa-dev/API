@@ -3,6 +3,7 @@ const program = new Command();
 const initSmt = require("./init-mst.js");
 const { genProof, genInput } = require("./gen-proof.js");
 const verifyProof = require("./verify-proof.js");
+const getCSVEntries = require("../utils/csv.js");
 const fs = require("fs");
 
 program
@@ -32,7 +33,12 @@ program
       throw new Error("The output file is not a json file");
     }
 
-    initSmt(pathToCsv, pathToTree);
+    const entries = getCSVEntries(pathToCsv);
+    
+    // get the height of the tree 
+    const treeHeight = Math.ceil(Math.log2(entries.length));
+
+    initSmt(entries, pathToTree, treeHeight);
   });
 
 program
