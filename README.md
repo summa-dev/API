@@ -12,7 +12,7 @@ The CLI comprises of three execs:
 $ node src/cli init-mst data.csv mst.json
 ```
 
-Parse the csv file provided as input (`data.csv`) into a Merkle Sum Tree and saves it in a json file provided as output `mst.json`. The csv file should be in the format of `userID,balance` (see `data.csv` for example).
+Parse the csv file provided as input (`data.csv`) into a Merkle Sum Tree and saves it in a json file provided as output `mst.json`. The csv file should be in the format of `userID,balance` (see [test/data.csv](./test/data.csv) for example).
 
 **`gen-proof`**
 
