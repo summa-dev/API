@@ -57,4 +57,5 @@ $ npm run test
 
 ### To DO 
 
-- [ ] Add packages in src 
+- [ ] Add reference to CLI!
+- [ ] Modify reference to mst and circuits repos
