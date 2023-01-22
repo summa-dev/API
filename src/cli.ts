@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import { Command } from "commander";
 import {helloWorld} from './index';
 const program = new Command();
