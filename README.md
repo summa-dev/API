@@ -59,3 +59,13 @@ $ npm run test
 
 - [ ] Add reference to CLI!
 - [ ] Modify reference to mst and circuits repos
+- [ ] Better create the ts package
+- [ ] Add Description to each function
+- [ ] Prettify Everything
+- [ ] Handle Errors in Proof Verification
+- [ ] Check usage of circomlibjs
+- [ ] Update mst package version
+
+### Testing
+- [ ] Providing wrong artifcats 
+

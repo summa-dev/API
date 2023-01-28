@@ -1,4 +1,4 @@
-import helloWorld from './hello';
+import PytPos from './pytPos';
 
-export { helloWorld };
+export {PytPos};
 export * from './types';
