@@ -1,7 +1,8 @@
 import {IncrementalMerkleSumTree} from 'pyt-merkle-sum-tree'
 import {FullProof, SnarkProverArtifacts} from './types/index'
-import generateProof from './generateProof'
-import verifyProof from './verifyProof'
+import _generateProof from './generateProof'
+import _verifyPublicSignals from './verifyPublicSignals'
+import _verifyZkProof from './verifyZkProof'
 
 
 /**
@@ -24,16 +25,23 @@ export default class PytPos {
    */
   static async generateProofOfSolvency(merkleSumTree: IncrementalMerkleSumTree, userIndex: number, assetsSum: bigint, proverArtifacts: SnarkProverArtifacts): Promise<FullProof> {
 
-    return await generateProof(merkleSumTree, userIndex, assetsSum, proverArtifacts)
-    }
+    return await _generateProof(merkleSumTree, userIndex, assetsSum, proverArtifacts)
+    
+  }
 
 
   /**
    * 
    */
-  static verifyProofOfSolvency(proof: FullProof, username: string, balance: bigint, expectedMerkleTreeRoot: bigint, expectedAssetsSum: bigint, verificationKey: JSON): boolean {
+  static verifyZkProof(proof: FullProof, verificationKey: JSON): boolean {
 
-    return verifyProof(proof, username, balance, expectedMerkleTreeRoot, expectedAssetsSum, verificationKey)
+    return _verifyZkProof(proof, verificationKey)
+
+    }
+
+  static verifyPublicSignals(proof: FullProof, username: string, balance: bigint, expectedMerkleTreeRoot: bigint, expectedAssetsSum: bigint): boolean {
+
+    return _verifyPublicSignals(proof, username, balance, expectedMerkleTreeRoot, expectedAssetsSum)
 
     }
 

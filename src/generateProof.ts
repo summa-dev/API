@@ -26,8 +26,6 @@ export default async function generateProof(merkleSumTree: IncrementalMerkleSumT
 
     const {proof, publicSignals} = await groth16.fullProve(circomInput, proverArtifacts.wasmFilePath, proverArtifacts.zkeyFilePath)
 
-    console.log(publicSignals)
-
     const fullProof: FullProof = {
         leafHash: publicSignals[0],
         rootHash: publicSignals[1],
