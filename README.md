@@ -52,6 +52,9 @@ const proof = await PytPos.generateProof(tree, userIndex, assetsSum, proverArtif
 Verifies the zk proof of solvency generated for a specific user. Takes as input the proof and the verification key.
 
 ```typescript
+
+const verificationKey = require('./test/artifacts/valid/vkey.json');
+
 const bool = await PytPos.verifyProof(proof, verificationKey)
 ```
 
