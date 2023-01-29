@@ -11,7 +11,6 @@ import { groth16 } from 'snarkjs';
  * @returns The input for the Circom circuit
  */
 function buildCircomInput(merkleSumTree: IncrementalMerkleSumTree, userIndex: number, assetsSum: bigint): CircomInput {
-
   const proofOfMembershipInput: MerkleProof = merkleSumTree.createProof(userIndex);
 
   const circomInput: CircomInput = {
@@ -21,7 +20,7 @@ function buildCircomInput(merkleSumTree: IncrementalMerkleSumTree, userIndex: nu
     pathIndices: proofOfMembershipInput.pathIndices,
     siblingsHashes: proofOfMembershipInput.siblingsHashes,
     siblingsSums: proofOfMembershipInput.siblingsSums,
-    assetsSum: assetsSum,
+    assetsSum,
   };
 
   return circomInput;
@@ -41,7 +40,6 @@ export default async function generateProof(
   assetsSum: bigint,
   proverArtifacts: SnarkProverArtifacts,
 ): Promise<FullProof> {
-
   const circomInput: CircomInput = buildCircomInput(merkleSumTree, userIndex, assetsSum);
 
   const { proof, publicSignals } = await groth16.fullProve(
@@ -50,14 +48,14 @@ export default async function generateProof(
     proverArtifacts.zkeyFilePath,
   );
 
-  const parsedUsername = Utils.parseBigIntToUsername(circomInput.username);
+  const parsedUsername = Utils.stringifyUsername(circomInput.username);
 
   const fullProof: FullProof = {
-    parsedUsername: parsedUsername,
+    parsedUsername,
     balance: circomInput.balance,
     rootHash: publicSignals[1],
     assetsSum: publicSignals[2],
-    proof: proof,
+    proof,
   };
 
   return fullProof;

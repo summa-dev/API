@@ -74,20 +74,3 @@ const assetsSum = proof.assetsSum // must match the total assets owned by the ex
 $ npm run test
 ```
 
-### To DO 
-
-- [x] Write In-Line comments
-- [ ] Write docs, explain leaf hash and stuff like this. Make reference to the circuit itself
-- [ ] Brainstorm possible tests!
-- [ ] Add reference to CLI!
-- [ ] Modify reference to mst and circuits repos
-- [ ] Better create the ts package
-- [ ] Add Description to each function
-- [ ] Prettify Everything
-- [ ] Handle Errors in Proof Verification
-- [ ] Check usage of circomlibjs
-- [ ] Update mst package version
-
-### Testing
-- [ ] Providing wrong artifcats 
-

@@ -31,7 +31,12 @@ export default class PytPos {
    * @param proverArtifacts The prover artifacts.
    * @returns A FullProof object containing the proof of solvency. It contains the zk proof and the public signals of the proof such as the username and the balance the proof was generated for, the root hash of the Merkle Sum Tree and the assets sum.
    */
-  static async generateProof(merkleSumTree: IncrementalMerkleSumTree, userIndex: number, assetsSum: bigint, proverArtifacts: SnarkProverArtifacts): Promise<FullProof> {
+  static async generateProof(
+    merkleSumTree: IncrementalMerkleSumTree,
+    userIndex: number,
+    assetsSum: bigint,
+    proverArtifacts: SnarkProverArtifacts,
+  ): Promise<FullProof> {
     return await _generateProof(merkleSumTree, userIndex, assetsSum, proverArtifacts);
   }
 
@@ -44,5 +49,4 @@ export default class PytPos {
   static async verifyProof(proof: FullProof, verificationKey: JSON): Promise<boolean> {
     return _verifyProof(proof, verificationKey);
   }
-
 }
