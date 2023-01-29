@@ -70,10 +70,16 @@ const rootHash = proof.rootHash // must match the root hash of the merkle sum tr
 const assetsSum = proof.assetsSum // must match the total assets owned by the exchange as published by the exchange
 
 ```
+## Code Quality and Formatting
 
-## Test 
+Run ESLint to analyze the code and catch bugs:
 
-```bash
-$ npm run test
-```
+```npm run lint```
 
+Run Prettier to check formatting rules and to fix them:
+
+```npm run format```
+
+## Testing
+
+```npm run test```
