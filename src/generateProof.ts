@@ -3,6 +3,13 @@ import { CircomInput, FullProof, SnarkProverArtifacts } from './types/index';
 import { Utils } from 'pyt-merkle-sum-tree';
 import { groth16 } from 'snarkjs';
 
+/**
+ * Build the input for the Circom circuit.
+ * @param merkleSumTree The Merkle Sum Tree.
+ * @param userIndex The index of the user in the Merkle Sum Tree.
+ * @param assetsSum The sum of the assets of the exchange.
+ * @returns The input for the Circom circuit
+ */
 function buildCircomInput(merkleSumTree: IncrementalMerkleSumTree, userIndex: number, assetsSum: bigint): CircomInput {
 
   const proofOfMembershipInput: MerkleProof = merkleSumTree.createProof(userIndex);
@@ -20,13 +27,21 @@ function buildCircomInput(merkleSumTree: IncrementalMerkleSumTree, userIndex: nu
   return circomInput;
 }
 
+/**
+ * Generate a proof of solvency.
+ * @param merkleSumTree The Merkle Sum Tree.
+ * @param userIndex The index of the user in the Merkle Sum Tree.
+ * @param assetsSum The sum of the assets of the exchange.
+ * @param proverArtifacts The prover artifacts.
+ * @returns A proof of solvency.
+ */
 export default async function generateProof(
   merkleSumTree: IncrementalMerkleSumTree,
   userIndex: number,
   assetsSum: bigint,
   proverArtifacts: SnarkProverArtifacts,
 ): Promise<FullProof> {
-    
+
   const circomInput: CircomInput = buildCircomInput(merkleSumTree, userIndex, assetsSum);
 
   const { proof, publicSignals } = await groth16.fullProve(
