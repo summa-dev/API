@@ -1,6 +1,6 @@
-# zk-pos-cli
+# pyt-pos
 
-Command Line Interface to use the pan-y-tomate Proof Of Solvency Tooling. You only need to provide a csv file with the user_id and the amount of tokens they hold and the CLI will generate a proof for each user and verify it.
+pyt-pos is a library to generate and verify pan-y-tomate Proof of Solvency. You only need to provide a csv file that contains the list of your users and their balance for a specific token. The library contains the apis to generate a proof of solvency for each user and verify it. 
 
 ## Usage
 
@@ -57,6 +57,9 @@ $ npm run test
 
 ### To DO 
 
+- [ ] Write In-Line comments
+- [ ] Write docs, explain leaf hash and stuff like this. Make reference to the circuit itself
+- [ ] Brainstorm possible tests!
 - [ ] Add reference to CLI!
 - [ ] Modify reference to mst and circuits repos
 - [ ] Better create the ts package

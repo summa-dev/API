@@ -1,4 +1,4 @@
 import PytPos from './pytPos';
 
-export {PytPos};
+export { PytPos };
 export * from './types';
