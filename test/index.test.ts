@@ -17,11 +17,11 @@ describe("pyt proof-of-solvency test", () => {
 
     it("Should generate a proof and verify starting from the tree", async () => {
 
-        const proof = await PytPos.generateProofOfSolvency(tree, 0, BigInt(3279597635), {wasmFilePath: './test/artifacts/pyt-pos-16.wasm', zkeyFilePath: './test/artifacts/pyt-pos-16_final.zkey'})
+        const proof = await PytPos.generateProof(tree, 0, BigInt(3279597635), {wasmFilePath: './test/artifacts/pyt-pos-16.wasm', zkeyFilePath: './test/artifacts/pyt-pos-16_final.zkey'})
 
         console.log(proof)
 
-        const bool = await PytPos.verifyProofOfSolvency(proof, 'OiMkdfHE', BigInt(22404), BigInt('7262604482306299190562201099243401493089981632105252274221847019078402629098'), BigInt(3279597635), verificationKey)
+        const bool = await PytPos.verifyProof(proof, verificationKey)
 
         console.log(bool)
 

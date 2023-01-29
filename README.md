@@ -54,6 +54,12 @@ Does this match your balance in the exchange? 665
 $ npm run test
 ```
 
+//    * Verifies the public signals of the proof of solvency generated for a specific user. It only verifies that the public signals (leaf hash, root hash and assets sum) matches the expected values.
+//    * It checks that 
+//    * 1. The proof was generated for the correct user
+//    * 2. The root hash of the Merkle Sum Tree used as public input for the proof generation matches the one published by the exchange
+//    * 3. The assetsSum used as public input for the proof generation matches the one published by the exchange
+
 
 ### To DO 
 

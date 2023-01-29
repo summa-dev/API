@@ -1,8 +1,10 @@
 import { IncrementalMerkleSumTree, MerkleProof } from 'pyt-merkle-sum-tree';
 import { CircomInput, FullProof, SnarkProverArtifacts } from './types/index';
+import { Utils } from 'pyt-merkle-sum-tree';
 import { groth16 } from 'snarkjs';
 
 function buildCircomInput(merkleSumTree: IncrementalMerkleSumTree, userIndex: number, assetsSum: bigint): CircomInput {
+
   const proofOfMembershipInput: MerkleProof = merkleSumTree.createProof(userIndex);
 
   const circomInput: CircomInput = {
@@ -24,6 +26,7 @@ export default async function generateProof(
   assetsSum: bigint,
   proverArtifacts: SnarkProverArtifacts,
 ): Promise<FullProof> {
+    
   const circomInput: CircomInput = buildCircomInput(merkleSumTree, userIndex, assetsSum);
 
   const { proof, publicSignals } = await groth16.fullProve(
@@ -32,8 +35,11 @@ export default async function generateProof(
     proverArtifacts.zkeyFilePath,
   );
 
+  const parsedUsername = Utils.parseBigIntToUsername(circomInput.username);
+
   const fullProof: FullProof = {
-    leafHash: publicSignals[0],
+    parsedUsername: parsedUsername,
+    balance: circomInput.balance,
     rootHash: publicSignals[1],
     assetsSum: publicSignals[2],
     proof: proof,

@@ -1,19 +1,17 @@
-export type BigNumberish = string | bigint;
-
 export type CircomInput = {
-  rootHash: BigNumberish;
-  username: BigNumberish;
-  balance: BigNumberish;
+  rootHash: bigint;
+  username: bigint;
+  balance: bigint;
   pathIndices: number[];
-  siblingsHashes: BigNumberish[];
-  siblingsSums: BigNumberish[];
-  assetsSum: BigNumberish;
+  siblingsHashes: bigint[];
+  siblingsSums: bigint[];
+  assetsSum: bigint;
 };
 
 export type SnarkJSProof = {
-  pi_a: BigNumberish[];
-  pi_b: BigNumberish[][];
-  pi_c: BigNumberish[];
+  pi_a: bigint[];
+  pi_b: bigint[][];
+  pi_c: bigint[];
   protocol: string;
   curve: string;
 };
@@ -24,8 +22,9 @@ export type SnarkProverArtifacts = {
 };
 
 export type FullProof = {
-  leafHash: BigNumberish;
-  rootHash: BigNumberish;
-  assetsSum: BigNumberish;
+  parsedUsername: string;
+  balance: bigint;
+  rootHash: bigint;
+  assetsSum: bigint;
   proof: SnarkJSProof;
 };
