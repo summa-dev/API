@@ -33,7 +33,7 @@ Generates a proof of solvency for a specific user using a zkSNARK. Takes as inpu
 
 ```typescript
 const userIndex = 1
-const assetsSum = BigInt(10000)
+const assetsSum = BigInt(4000000000)
 const pathToWasm = './test/artifacts/valid/pyt-pos-16.wasm'
 const pathToZkey = './test/artifacts/valid/pyt-pos-16_final.zkey'
 
