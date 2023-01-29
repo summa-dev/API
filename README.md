@@ -63,7 +63,7 @@ $ npm run test
 
 ### To DO 
 
-- [ ] Write In-Line comments
+- [x] Write In-Line comments
 - [ ] Write docs, explain leaf hash and stuff like this. Make reference to the circuit itself
 - [ ] Brainstorm possible tests!
 - [ ] Add reference to CLI!

@@ -3,28 +3,107 @@ import { PytPos } from '../src/index';
 describe("pyt proof-of-solvency test", () => {
 
     const tree = PytPos.createMerkleSumTree('./test/entries/entry-65536-valid.csv')
+    // The tree has 2**16 entries. The sum of the liabilities is 3279597632.
+    const liabilitiesSum = BigInt(3279597632)
 
-    const verificationKey : JSON = require('./artifacts/vkey.json')
+    const validVerificationKey : JSON = require('./artifacts/valid/vkey.json')
+    const pathToValidWasm = './test/artifacts/valid/pyt-pos-16.wasm'
+    const pathToValidZkey = './test/artifacts/valid/pyt-pos-16_final.zkey'
 
+    const invalidVerificationKey : JSON = require('./artifacts/invalid/semaphore.json')
+    const pathToInvalidWasm = './test/artifacts/invalid/sempahore.wasm'
+    const pathToInvalidZkey = './test/artifacts/invalid/sempahore.zkey'
     
     it("Should initialize a tree", () => {
+        expect(tree).toBeDefined()
+    })
 
-        // using the same entries as in https://github.com/pan-y-tomate/pyt-merkle-sum-tree
+    it("Should generate a valid proof starting from a random index of the tree and an assets sums > total sum of liabilities and valid artifacts", async () => {
+
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
+
+        const assetsSum = liabilitiesSum + BigInt(1)
+
+        const proof = await PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToValidWasm, zkeyFilePath: pathToValidZkey})
+
+        const bool = await PytPos.verifyProof(proof, validVerificationKey)
+
+        expect(bool).toBe(true)
+    })
+
+    it("Should generate a valid proof starting from a random index of the tree and an assets sums = total sum of liabilities and valid artifacts", async () => {
+
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
+
+        const assetsSum = liabilitiesSum
+
+        const proof = await PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToValidWasm, zkeyFilePath: pathToValidZkey})
+
+        const bool = await PytPos.verifyProof(proof, validVerificationKey)
+
+        expect(bool).toBe(true)
+    })
+
+    it("Should generate a valid proof starting from a random index of the tree and an assets sums = total sum of liabilities and valid artifacts", async () => {
+
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
+
+        const assetsSum = liabilitiesSum
+
+        const proof = await PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToValidWasm, zkeyFilePath: pathToValidZkey})
+
+        const bool = await PytPos.verifyProof(proof, validVerificationKey)
+
+        expect(bool).toBe(true)
+    })
+
+    it("Should throw an error when generating a proof starting from a random index of the tree and an assets sums < total sum of liabilities and valid artifacts", async () => {
+
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
+
+        const assetsSum = liabilitiesSum - BigInt(1)
+
+        // expect the function to throw an error
+        await expect(PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToValidWasm, zkeyFilePath: pathToValidZkey})).rejects.toThrow()      
 
     })
 
-    // 3279597632
+    it("Should throw an error when generating a proof starting from a random index of the tree and an assets sums > total sum of liabilities and a path to an invalid wasm file", async () => {
 
-    it("Should generate a proof and verify starting from the tree", async () => {
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
 
-        const proof = await PytPos.generateProof(tree, 0, BigInt(3279597635), {wasmFilePath: './test/artifacts/pyt-pos-16.wasm', zkeyFilePath: './test/artifacts/pyt-pos-16_final.zkey'})
+        const assetsSum = liabilitiesSum + BigInt(1)
 
-        console.log(proof)
-
-        const bool = await PytPos.verifyProof(proof, verificationKey)
-
-        console.log(bool)
+        // expect the function to throw an error
+        await expect(PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToInvalidWasm, zkeyFilePath: pathToValidZkey})).rejects.toThrow()      
 
     })
+
+    it("Should throw an error when generating a proof starting from a random index of the tree and an assets sums > total sum of liabilities and a path to an invalid zkey file", async () => {
+
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
+
+        const assetsSum = liabilitiesSum + BigInt(1)
+
+        // expect the function to throw an error
+        await expect(PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToValidWasm, zkeyFilePath: pathToInvalidZkey})).rejects.toThrow()      
+
+
+    })
+
+    it("Should not verify a valid proof when using an invalid verification key", async () => {
+
+        const randomIndex = Math.floor(Math.random() * tree.leaves.length)
+
+        const assetsSum = liabilitiesSum + BigInt(1)
+
+        const proof = await PytPos.generateProof(tree, randomIndex, assetsSum, {wasmFilePath: pathToValidWasm, zkeyFilePath: pathToValidZkey})
+
+        const bool = await PytPos.verifyProof(proof, invalidVerificationKey)
+
+        expect(bool).toBe(false)
+
+    })
+
 
 })

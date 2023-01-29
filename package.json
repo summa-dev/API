@@ -4,7 +4,7 @@
   "description": "A library to generate and verify pan-y-tomate Proof of Solvency",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --config jestconfig.json",
+    "test": "jest --config jestconfig.json --detectOpenHandles --forceExit",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
