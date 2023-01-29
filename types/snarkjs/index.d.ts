@@ -3,7 +3,7 @@
 declare module "snarkjs" {
     export = snarkjs
 
-    declare const snarkjs: {
+    const snarkjs: {
         groth16: {
             exportSolidityCallData: any
             fullProve: any

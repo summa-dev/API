@@ -1,6 +1,6 @@
 {
   "name": "pyt-pos",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A library to generate and verify pan-y-tomate Proof of Solvency",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
