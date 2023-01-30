@@ -1,7 +1,32 @@
 import { IncrementalMerkleSumTree, MerkleProof } from 'pyt-merkle-sum-tree';
-import { CircomInput, FullProof, SnarkProverArtifacts } from './types/index';
+import { CircomInput, FullProof, SnarkJSProverArtifacts, SnarkJSProof} from './types/index';
 import { Utils } from 'pyt-merkle-sum-tree';
 import { groth16 } from 'snarkjs';
+
+/**
+ * Generate a proof of solvency.
+ * @param merkleSumTree The Merkle Sum Tree.
+ * @param userIndex The index of the user in the Merkle Sum Tree.
+ * @param assetsSum The sum of the assets of the exchange.
+ * @param proverArtifacts The prover artifacts.
+ * @returns A proof of solvency.
+ */
+export default async function generateProofForUser(
+  merkleSumTree: IncrementalMerkleSumTree,
+  userIndex: number,
+  assetsSum: bigint,
+  proverArtifacts: SnarkJSProverArtifacts,
+): Promise<FullProof> {
+  const circomInput: CircomInput = buildCircomInput(merkleSumTree, userIndex, assetsSum);
+
+  const { proof, publicSignals } = await groth16.fullProve(
+    circomInput,
+    proverArtifacts.wasmFilePath,
+    proverArtifacts.zkeyFilePath,
+  );
+
+  return buildFullProof(circomInput, publicSignals, proof);
+}
 
 /**
  * Build the input for the Circom circuit.
@@ -26,28 +51,8 @@ function buildCircomInput(merkleSumTree: IncrementalMerkleSumTree, userIndex: nu
   return circomInput;
 }
 
-/**
- * Generate a proof of solvency.
- * @param merkleSumTree The Merkle Sum Tree.
- * @param userIndex The index of the user in the Merkle Sum Tree.
- * @param assetsSum The sum of the assets of the exchange.
- * @param proverArtifacts The prover artifacts.
- * @returns A proof of solvency.
- */
-export default async function generateProof(
-  merkleSumTree: IncrementalMerkleSumTree,
-  userIndex: number,
-  assetsSum: bigint,
-  proverArtifacts: SnarkProverArtifacts,
-): Promise<FullProof> {
-  const circomInput: CircomInput = buildCircomInput(merkleSumTree, userIndex, assetsSum);
-
-  const { proof, publicSignals } = await groth16.fullProve(
-    circomInput,
-    proverArtifacts.wasmFilePath,
-    proverArtifacts.zkeyFilePath,
-  );
-
+function buildFullProof (circomInput: CircomInput, publicSignals: bigint[], proof: SnarkJSProof): FullProof {
+  
   const parsedUsername = Utils.stringifyUsername(circomInput.username);
 
   const fullProof: FullProof = {

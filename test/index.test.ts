@@ -1,4 +1,4 @@
-import { PytPos, FullProof, SnarkProverArtifacts } from '../src/index';
+import { PytPos, FullProof, SnarkJSProverArtifacts } from '../src/index';
 
 describe('pyt proof-of-solvency test', () => {
   const tree = PytPos.createMerkleSumTree('./test/entries/entry-65536-valid.csv');
@@ -9,7 +9,7 @@ describe('pyt proof-of-solvency test', () => {
   const pathToValidWasm = './test/artifacts/valid/pyt-pos-16.wasm';
   const pathToValidZkey = './test/artifacts/valid/pyt-pos-16_final.zkey';
 
-  const validProverArtifacts: SnarkProverArtifacts = {
+  const validProverArtifacts: SnarkJSProverArtifacts = {
     wasmFilePath: pathToValidWasm,
     zkeyFilePath: pathToValidZkey,
   };
@@ -27,7 +27,7 @@ describe('pyt proof-of-solvency test', () => {
 
     const assetsSum = liabilitiesSum + BigInt(1);
 
-    const proof: FullProof = await PytPos.generateProof(tree, randomIndex, assetsSum, validProverArtifacts);
+    const proof: FullProof = await PytPos.generateProofForUser(tree, randomIndex, assetsSum, validProverArtifacts);
 
     const bool = await PytPos.verifyProof(proof, validVerificationKey);
 
@@ -39,7 +39,7 @@ describe('pyt proof-of-solvency test', () => {
 
     const assetsSum = liabilitiesSum + BigInt(1);
 
-    const proof: FullProof = await PytPos.generateProof(tree, index, assetsSum, validProverArtifacts);
+    const proof: FullProof = await PytPos.generateProofForUser(tree, index, assetsSum, validProverArtifacts);
 
     const bool = await PytPos.verifyProof(proof, validVerificationKey);
 
@@ -53,7 +53,7 @@ describe('pyt proof-of-solvency test', () => {
 
     const assetsSum = liabilitiesSum;
 
-    const proof: FullProof = await PytPos.generateProof(tree, randomIndex, assetsSum, validProverArtifacts);
+    const proof: FullProof = await PytPos.generateProofForUser(tree, randomIndex, assetsSum, validProverArtifacts);
 
     const bool = await PytPos.verifyProof(proof, validVerificationKey);
 
@@ -65,7 +65,7 @@ describe('pyt proof-of-solvency test', () => {
 
     const assetsSum = liabilitiesSum;
 
-    const proof: FullProof = await PytPos.generateProof(tree, randomIndex, assetsSum, {
+    const proof: FullProof = await PytPos.generateProofForUser(tree, randomIndex, assetsSum, {
       wasmFilePath: pathToValidWasm,
       zkeyFilePath: pathToValidZkey,
     });
@@ -82,7 +82,7 @@ describe('pyt proof-of-solvency test', () => {
 
     // expect the function to throw an error
     await expect(
-      PytPos.generateProof(tree, randomIndex, assetsSum, {
+      PytPos.generateProofForUser(tree, randomIndex, assetsSum, {
         wasmFilePath: pathToValidWasm,
         zkeyFilePath: pathToValidZkey,
       }),
@@ -96,7 +96,7 @@ describe('pyt proof-of-solvency test', () => {
 
     // expect the function to throw an error
     await expect(
-      PytPos.generateProof(tree, randomIndex, assetsSum, {
+      PytPos.generateProofForUser(tree, randomIndex, assetsSum, {
         wasmFilePath: pathToInvalidWasm,
         zkeyFilePath: pathToValidZkey,
       }),
@@ -110,7 +110,7 @@ describe('pyt proof-of-solvency test', () => {
 
     // expect the function to throw an error
     await expect(
-      PytPos.generateProof(tree, randomIndex, assetsSum, {
+      PytPos.generateProofForUser(tree, randomIndex, assetsSum, {
         wasmFilePath: pathToValidWasm,
         zkeyFilePath: pathToInvalidZkey,
       }),
@@ -122,7 +122,7 @@ describe('pyt proof-of-solvency test', () => {
 
     const assetsSum = liabilitiesSum + BigInt(1);
 
-    const proof: FullProof = await PytPos.generateProof(tree, randomIndex, assetsSum, {
+    const proof: FullProof = await PytPos.generateProofForUser(tree, randomIndex, assetsSum, {
       wasmFilePath: pathToValidWasm,
       zkeyFilePath: pathToValidZkey,
     });

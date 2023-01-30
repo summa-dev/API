@@ -1,6 +1,6 @@
 import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
-import { FullProof, SnarkProverArtifacts } from './types/index';
-import _generateProof from './generateProof';
+import { FullProof, SnarkJSProverArtifacts } from './types/index';
+import _generateProofForUser from './generateProof';
 import _verifyProof from './verifyProof';
 
 /**
@@ -31,13 +31,13 @@ export default class PytPos {
    * @param proverArtifacts The prover artifacts.
    * @returns A FullProof object containing the proof of solvency. It contains the zk proof and the public signals of the proof such as the username and the balance the proof was generated for, the root hash of the Merkle Sum Tree and the assets sum.
    */
-  static async generateProof(
+  static async generateProofForUser(
     merkleSumTree: IncrementalMerkleSumTree,
     userIndex: number,
     assetsSum: bigint,
-    proverArtifacts: SnarkProverArtifacts,
+    proverArtifacts: SnarkJSProverArtifacts,
   ): Promise<FullProof> {
-    return await _generateProof(merkleSumTree, userIndex, assetsSum, proverArtifacts);
+    return await _generateProofForUser(merkleSumTree, userIndex, assetsSum, proverArtifacts);
   }
 
   /**

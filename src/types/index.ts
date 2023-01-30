@@ -16,7 +16,7 @@ export type SnarkJSProof = {
   curve: string;
 };
 
-export type SnarkProverArtifacts = {
+export type SnarkJSProverArtifacts = {
   wasmFilePath: string;
   zkeyFilePath: string;
 };
