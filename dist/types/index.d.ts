@@ -1,4 +1,4 @@
-import { Entry } from "pyt-merkle-sum-tree";
+import { Entry } from 'pyt-merkle-sum-tree';
 export type CircomInput = {
     rootHash: bigint;
     username: bigint;
