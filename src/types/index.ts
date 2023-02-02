@@ -1,4 +1,4 @@
-import { Entry } from "pyt-merkle-sum-tree";
+import { Entry } from 'pyt-merkle-sum-tree';
 
 export type CircomInput = {
   rootHash: bigint;
@@ -24,9 +24,8 @@ export type SnarkProverArtifacts = {
 };
 
 export type FullProof = {
-  entry : Entry
+  entry: Entry;
   rootHash: bigint;
   assetsSum: bigint;
   proof: Proof;
-}
-
+};

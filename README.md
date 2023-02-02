@@ -5,34 +5,27 @@ pyt-pos is a library to generate and verify pan-y-tomate Proof of Solvency. You 
 ```npm install pyt-pos```
 
 ```typescript
-import { PytPos } from 'pyt-pos';
+import { Prover, UserVerifier } from 'pyt-pos';
+import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
 ```
 
-PytPos is a class that contains the core methods to let CEXs provide credible Proof Of Solvency to its users while maintaining secrecy over their Business Information thanks to zkSNARKs.
-The exchange first needs to create a [Merkle Sum Tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree) from a csv file containing the username and balances of its users.
-Then, it can generate a proof of solvency for a specific user using [zkSNARKs circuits](https://github.com/pan-y-tomate/pyt-circuits).
-The proof doesn't reveal information such as the total balances of each user, the number of users and the total amount of liabilities are not revealed to the public.
-The PytPos class also provides methods such that the user can verify the proof of solvency.
+`Prover` is a class that contains the core methods to let CEXs provide credible Proof Of Solvency to its users while maintaining secrecy over their Business Information thanks to zkSNARKs.
+The proof doesn't reveal any information such as the total balances of each useru, the number of users and the total amount of liabilities of the exchange.
 
-## APIs
+`UserVerifier` is a class that contains the core methods to let a user verify the solvency of a CEX.
 
-\# **createMerkleSumTree**(pathToCsv: _string_): _IncrementalMerkleSumTree_
+`IncrementalMerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree).
 
-Creates a Merkle Sum Tree from a csv file containing the username and balances of the users.
+## APIs - Prover 
 
-```typescript
-
-const pathToCsv = "test/entries/entry-16-valid.csv" 
-
-const tree = PytPos.createMerkleSumTree(pathToCsv)
-```
-
-\# **generateProof**(merkleSumTree: _IncrementalMerkleSumTree_, userIndex _number_, assetsSum: _bigint_, proverArtifacts _SnarkProverArtifacts_): _FullProof_
-
-Generates a proof of solvency for a specific user using a zkSNARK. Takes as input an instance of the Merkle Sum Tree, the index of the user in the Merkle Sum Tree file, the total assets owned by the exchange and the zkSNARK prover artifacts.
+\# **new Prover**(tree: _IncrementalMerkleSumTree_, assetsSum _bigint_, proverArtifacts _SnarkProverArtifacts_): _Prover_
 
 ```typescript
-const userIndex = 1
+import { Prover } from "pyt-pos"
+import { IncrementalMerkleSumTree } from "pyt-merkle-sum-tree"
+
+const tree = new IncrementalMerkleSumTree("test/entries/entry-16-valid.csv")
+
 const assetsSum = BigInt(4000000000)
 const pathToWasm = './test/artifacts/valid/pyt-pos-16.wasm'
 const pathToZkey = './test/artifacts/valid/pyt-pos-16_final.zkey'
@@ -42,30 +35,54 @@ const proverArtifacts = {
     zkeyFilePath: pathToZkey
 }
 
-const proof = await PytPos.generateProof(tree, userIndex, assetsSum, proverArtifacts)
+const prover = new Prover(tree, assetsSum, proverArtifacts)
 ```
+
+Initializes a prover object. Takes as input an instance of the Merkle Sum Tree, the total assets owned by the exchange and the zkSNARK prover artifacts.
 
 > The available prover artifacts generated after a trusted-setup can be found in the [pyt-circuits](https://github.com/pan-y-tomate/pyt-circuits#trusted-setup-artifcats) repository. For now, the trusted setup is only available for a merkle sum tree with 16 levels.
 
-\# **verifyProof**(proof: _FullProof_, verificationKey _JSON_): _boolean_
+\# **generateProof**(userIndex _number_): _FullProof_
 
-Verifies the zk proof of solvency generated for a specific user. Takes as input the proof and the verification key.
+Generates a proof of solvency for a specific user using a zkSNARK taking as input the index of the user in the Merkle Sum Tree. 
 
 ```typescript
 
-const verificationKey = require('./test/artifacts/valid/vkey.json');
-
-const bool = await PytPos.verifyProof(proof, verificationKey)
+const userIndex = 0
+const proof = await Prover.generateProofForUser(userIndex)
 ```
+
+## APIs - UserVerifier 
+
+\# **new UserVerifier**(username: _string_, balance _bigint_, verificationKey _JSON_): _UserVerifier_
+
+```typescript
+import { UserVerifier } from "pyt-pos"
+
+const username = "OiMkdfHE"
+const balance = BigInt(22404)
+
+const userVerifier = new UserVerifier(username, balance, verificationKey)
+```
+
+Initializes a user verifier object. Takes as input the username of the user, the balance of the user and the verification key.
 
 > The available verification key generated after a trusted-setup can be found in the [pyt-circuits](https://github.com/pan-y-tomate/pyt-circuits#trusted-setup-artifcats) repository. For now, the verification key is only available for a merkle sum tree with 16 levels.
 
-The implementer should make sure that the public signals of the proof of solvency generated for a specific user match the expected values in order to verify it. These can be access from the proof object. 
+
+\# **verifyProof**(proof: _FullProof_): _boolean_
+
+Verifies the zk proof of solvency generated by the exchange for a specific user. Takes as input the proof
 
 ```typescript
 
-const username = proof.parsedUsername // must match the username of the user the proof was generated for
-const balance = proof.balance // must match the balance of the user the proof was generated for
+const bool = await userVerifier.verifyProof(proof)
+```
+
+The implementer should make sure that the public signals of the proof of solvency generated for a specific user match the expected values. These can be accessed from the proof object. 
+
+```typescript
+
 const rootHash = proof.rootHash // must match the root hash of the merkle sum tree published by the exchange
 const assetsSum = proof.assetsSum // must match the total assets owned by the exchange as published by the exchange
 

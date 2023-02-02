@@ -2,9 +2,8 @@ import { Prover, UserVerifier, FullProof, SnarkProverArtifacts } from '../src/in
 import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
 
 describe('pyt proof-of-solvency test', () => {
-
-  const tree = new IncrementalMerkleSumTree('./test/entries/entry-65536-valid.csv');  // The tree has 2**16 entries. 
-  const liabilitiesSum = tree.root.sum 
+  const tree = new IncrementalMerkleSumTree('./test/entries/entry-65536-valid.csv'); // The tree has 2**16 entries.
+  const liabilitiesSum = tree.root.sum;
 
   const pathToValidWasm = './test/artifacts/valid/pyt-pos-16.wasm';
   const pathToValidZkey = './test/artifacts/valid/pyt-pos-16_final.zkey';
@@ -32,7 +31,6 @@ describe('pyt proof-of-solvency test', () => {
   const invalidVerificationKey: JSON = require('./artifacts/invalid/semaphore.json');
 
   it('Should verify a proof generated for a user when assets sums > total sum of liabilities', async () => {
-
     const assetsSum = liabilitiesSum + BigInt(1);
 
     const prover = new Prover(tree, assetsSum, validProverArtifacts);
@@ -41,7 +39,11 @@ describe('pyt proof-of-solvency test', () => {
 
     const proof: FullProof = await prover.generateProofForUser(randomIndex);
 
-    const userVerifier = new UserVerifier(tree.entries[randomIndex].username, tree.entries[randomIndex].balance, validVerificationKey);
+    const userVerifier = new UserVerifier(
+      tree.entries[randomIndex].username,
+      tree.entries[randomIndex].balance,
+      validVerificationKey,
+    );
 
     const bool = await userVerifier.verifyProof(proof);
 
@@ -49,7 +51,6 @@ describe('pyt proof-of-solvency test', () => {
   });
 
   it('Should verify a proof generated for a user when assets sums = total sum of liabilities', async () => {
-
     const assetsSum = liabilitiesSum;
 
     const prover = new Prover(tree, assetsSum, validProverArtifacts);
@@ -58,7 +59,11 @@ describe('pyt proof-of-solvency test', () => {
 
     const proof: FullProof = await prover.generateProofForUser(randomIndex);
 
-    const userVerifier = new UserVerifier(tree.entries[randomIndex].username, tree.entries[randomIndex].balance, validVerificationKey);
+    const userVerifier = new UserVerifier(
+      tree.entries[randomIndex].username,
+      tree.entries[randomIndex].balance,
+      validVerificationKey,
+    );
 
     const bool = await userVerifier.verifyProof(proof);
 
@@ -66,7 +71,6 @@ describe('pyt proof-of-solvency test', () => {
   });
 
   it('Should throw an error generating for a user when assets sums < total sum of liabilities', async () => {
-
     const assetsSum = liabilitiesSum - BigInt(1);
 
     const prover = new Prover(tree, assetsSum, validProverArtifacts);
@@ -74,8 +78,7 @@ describe('pyt proof-of-solvency test', () => {
     const randomIndex = Math.floor(Math.random() * tree.leaves.length);
 
     // expect the function to throw an error
-    await expect(
-      prover.generateProofForUser(randomIndex)).rejects.toThrow();
+    await expect(prover.generateProofForUser(randomIndex)).rejects.toThrow();
   });
 
   it('Should not verify a proof generated for a different user', async () => {
@@ -95,7 +98,6 @@ describe('pyt proof-of-solvency test', () => {
   });
 
   it('Should throw an error when generating a proof using an invalid wasm file', async () => {
-
     const assetsSum = liabilitiesSum + BigInt(1);
 
     const prover = new Prover(tree, assetsSum, invalidProverArtifacts1);
@@ -103,12 +105,10 @@ describe('pyt proof-of-solvency test', () => {
     const randomIndex = Math.floor(Math.random() * tree.leaves.length);
 
     // expect the function to throw an error
-    await expect(
-      prover.generateProofForUser(randomIndex)).rejects.toThrow();
+    await expect(prover.generateProofForUser(randomIndex)).rejects.toThrow();
   });
 
   it('Should throw an error when generating a proof using an invalid zkey file', async () => {
-
     const assetsSum = liabilitiesSum + BigInt(1);
 
     const prover = new Prover(tree, assetsSum, invalidProverArtifacts2);
@@ -116,8 +116,7 @@ describe('pyt proof-of-solvency test', () => {
     const randomIndex = Math.floor(Math.random() * tree.leaves.length);
 
     // expect the function to throw an error
-    await expect(
-      prover.generateProofForUser(randomIndex)).rejects.toThrow();
+    await expect(prover.generateProofForUser(randomIndex)).rejects.toThrow();
   });
 
   it('Should not verify a valid proof when using an invalid verification key', async () => {
@@ -129,7 +128,11 @@ describe('pyt proof-of-solvency test', () => {
 
     const proof: FullProof = await prover.generateProofForUser(randomIndex);
 
-    const userVerifier = new UserVerifier(tree.entries[randomIndex].username, tree.entries[randomIndex].balance, invalidVerificationKey);
+    const userVerifier = new UserVerifier(
+      tree.entries[randomIndex].username,
+      tree.entries[randomIndex].balance,
+      invalidVerificationKey,
+    );
 
     const bool = await userVerifier.verifyProof(proof);
 

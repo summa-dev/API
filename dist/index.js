@@ -14,7 +14,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PytPos = void 0;
-var pytPos_1 = require("./pytPos");
-exports.PytPos = pytPos_1.default;
+exports.UserVerifier = exports.Prover = void 0;
+var prover_1 = require("./prover");
+exports.Prover = prover_1.default;
+var userVerifier_1 = require("./userVerifier");
+exports.UserVerifier = userVerifier_1.default;
 __exportStar(require("./types"), exports);

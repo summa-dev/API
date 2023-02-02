@@ -36,57 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var pyt_merkle_sum_tree_1 = require("pyt-merkle-sum-tree");
 var snarkjs_1 = require("snarkjs");
 /**
- * Build the input for the Circom circuit.
- * @param merkleSumTree The Merkle Sum Tree.
- * @param userIndex The index of the user in the Merkle Sum Tree.
- * @param assetsSum The sum of the assets of the exchange.
- * @returns The input for the Circom circuit
+ * UserVerifier is a class that contains the core methods to let a user verify the solvency of a CEX.
  */
-function buildCircomInput(merkleSumTree, userIndex, assetsSum) {
-    var proofOfMembershipInput = merkleSumTree.createProof(userIndex);
-    var circomInput = {
-        rootHash: proofOfMembershipInput.rootHash,
-        username: proofOfMembershipInput.username,
-        balance: proofOfMembershipInput.balance,
-        pathIndices: proofOfMembershipInput.pathIndices,
-        siblingsHashes: proofOfMembershipInput.siblingsHashes,
-        siblingsSums: proofOfMembershipInput.siblingsSums,
-        assetsSum: assetsSum,
-    };
-    return circomInput;
-}
-/**
- * Generate a proof of solvency.
- * @param merkleSumTree The Merkle Sum Tree.
- * @param userIndex The index of the user in the Merkle Sum Tree.
- * @param assetsSum The sum of the assets of the exchange.
- * @param proverArtifacts The prover artifacts.
- * @returns A proof of solvency.
- */
-function generateProof(merkleSumTree, userIndex, assetsSum, proverArtifacts) {
-    return __awaiter(this, void 0, void 0, function () {
-        var circomInput, _a, proof, publicSignals, parsedUsername, fullProof;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    circomInput = buildCircomInput(merkleSumTree, userIndex, assetsSum);
-                    return [4 /*yield*/, snarkjs_1.groth16.fullProve(circomInput, proverArtifacts.wasmFilePath, proverArtifacts.zkeyFilePath)];
-                case 1:
-                    _a = _b.sent(), proof = _a.proof, publicSignals = _a.publicSignals;
-                    parsedUsername = pyt_merkle_sum_tree_1.Utils.stringifyUsername(circomInput.username);
-                    fullProof = {
-                        parsedUsername: parsedUsername,
-                        balance: circomInput.balance,
-                        rootHash: publicSignals[1],
-                        assetsSum: publicSignals[2],
-                        proof: proof,
-                    };
-                    return [2 /*return*/, fullProof];
-            }
+var UserVerifier = /** @class */ (function () {
+    /**
+     * Initializes the verifier
+     * @param username The username of the user.
+     * @param balance The balance of the user.
+     * @param verificationKey The verification key of the verifier.
+     */
+    function UserVerifier(username, balance, verificationKey) {
+        this._verificationKey = verificationKey;
+        this.username = username;
+        this.balance = balance;
+        // freeze the object to prevent any modification
+        Object.freeze(this);
+    }
+    /**
+     * Verify a proof of solvency.
+     * @param fullProof The proof of solvency.
+     * @returns True if the proof is valid, false otherwise.
+     */
+    UserVerifier.prototype.verifyProof = function (fullProof) {
+        return __awaiter(this, void 0, void 0, function () {
+            var leafHash;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (fullProof.entry.username !== this.username || fullProof.entry.balance !== this.balance) {
+                            return [2 /*return*/, false];
+                        }
+                        leafHash = fullProof.entry.computeLeaf().hash;
+                        return [4 /*yield*/, snarkjs_1.groth16.verify(this._verificationKey, [leafHash, fullProof.rootHash, fullProof.assetsSum], fullProof.proof)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
         });
-    });
-}
-exports.default = generateProof;
+    };
+    return UserVerifier;
+}());
+exports.default = UserVerifier;
