@@ -1,4 +1,5 @@
-import PytPos from './pytPos';
+import Prover from './prover';
+import UserVerifier from './userVerifier';
 
-export { PytPos };
+export { Prover, UserVerifier };
 export * from './types';

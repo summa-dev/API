@@ -1,3 +1,5 @@
+import { Entry } from "pyt-merkle-sum-tree";
+
 export type CircomInput = {
   rootHash: bigint;
   username: bigint;
@@ -8,7 +10,7 @@ export type CircomInput = {
   assetsSum: bigint;
 };
 
-export type SnarkJSProof = {
+export type Proof = {
   pi_a: bigint[];
   pi_b: bigint[][];
   pi_c: bigint[];
@@ -22,9 +24,9 @@ export type SnarkProverArtifacts = {
 };
 
 export type FullProof = {
-  parsedUsername: string;
-  balance: bigint;
+  entry : Entry
   rootHash: bigint;
   assetsSum: bigint;
-  proof: SnarkJSProof;
-};
+  proof: Proof;
+}
+
