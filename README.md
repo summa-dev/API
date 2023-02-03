@@ -1,6 +1,8 @@
 # pyt-pos
 
-pyt-pos is a library to generate and verify pan-y-tomate Proof of Solvency. You only need to provide a csv file that contains the list of your users and their balance for a specific token. The library contains the apis to generate a proof of solvency for each user and verify it. 
+pyt-pos is a library to generate and verify pan-y-tomate Proof of Solvency. 
+
+You only need to provide a csv file that contains the list of your users and their balance for a specific token. The library contains the apis to generate a proof of solvency for each user and verify it. 
 
 ```npm install pyt-pos```
 
@@ -9,10 +11,10 @@ import { Prover, UserVerifier } from 'pyt-pos';
 import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
 ```
 
-`Prover` is a class that contains the core methods to let CEXs provide credible Proof Of Solvency to its users while maintaining secrecy over their Business Information thanks to zkSNARKs.
-The proof doesn't reveal any information such as the total balances of each useru, the number of users and the total amount of liabilities of the exchange.
+`Prover` is a class that contains the core APis to let CEXs provide credible Proof Of Solvency to its users.
+The proof doesn't reveal any information such as the total balances of each user, the number of users and the total amount of liabilities of the exchange.
 
-`UserVerifier` is a class that contains the core methods to let a user verify the solvency of a CEX.
+`UserVerifier` is a class that contains the core APIs to let a user verify the proof that has been provided them by the exchange.
 
 `IncrementalMerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree).
 
