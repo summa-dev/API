@@ -1,5 +1,5 @@
 import { SnarkProverArtifacts, FullProof } from './types';
-import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
+import { MerkleSumTree } from 'pyt-merkle-sum-tree';
 /**
  * Prover is a class that contains the core methods to let CEXs provide credible Proof Of Solvency to its users
  * while maintaining secrecy over their Business Information thanks to zkSNARKs.
@@ -15,8 +15,8 @@ export default class Prover {
      * @param assetsSum The total assets owned by the exchange.
      * @param proverArtifacts The artifacts of the prover.
      */
-    constructor(tree: IncrementalMerkleSumTree, assetsSum: bigint, proverArtifacts: SnarkProverArtifacts);
-    get tree(): IncrementalMerkleSumTree;
+    constructor(tree: MerkleSumTree, assetsSum: bigint, proverArtifacts: SnarkProverArtifacts);
+    get tree(): MerkleSumTree;
     get assetsSum(): bigint;
     /**
      * Generate a proof of solvency for a specific user.

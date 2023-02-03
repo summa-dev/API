@@ -11,10 +11,10 @@ import { Prover, UserVerifier } from 'pyt-pos';
 import { MerkleSumTree } from 'pyt-merkle-sum-tree';
 ```
 
-`Prover` is a class that contains the core APis to let CEXs provide credible Proof Of Solvency to its users.
+`Prover` is a class that contains the core APIs to let CEXs generate Proof Of Solvency for each of its users.
 The proof doesn't reveal any information such as the total balances of each user, the number of users and the total amount of liabilities of the exchange.
 
-`UserVerifier` is a class that contains the core APIs to let a user verify the proof that has been provided them by the exchange.
+`UserVerifier` is a class that contains the core APIs to let a user verify the proof that has been provided to them by the exchange.
 
 `MerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree).
 
@@ -26,7 +26,7 @@ The proof doesn't reveal any information such as the total balances of each user
 import { Prover } from "pyt-pos"
 import { MerkleSumTree } from "pyt-merkle-sum-tree"
 
-const tree = new MerkleSumTree("test/entries/entry-16-valid.csv")
+const tree = new MerkleSumTree("test/entries/entry-65536-valid.csv")
 
 const assetsSum = BigInt(4000000000)
 const pathToWasm = './test/artifacts/valid/pyt-pos-16.wasm'
@@ -51,7 +51,7 @@ Generates a proof of solvency for a specific user using a zkSNARK taking as inpu
 ```typescript
 
 const userIndex = 0
-const proof = await Prover.generateProofForUser(userIndex)
+const proof = await prover.generateProofForUser(userIndex)
 ```
 
 ## APIs - UserVerifier 
@@ -63,6 +63,8 @@ import { UserVerifier } from "pyt-pos"
 
 const username = "OiMkdfHE"
 const balance = BigInt(22404)
+const verificationKey = require('./artifacts/valid/vkey.json');
+
 
 const userVerifier = new UserVerifier(username, balance, verificationKey)
 ```

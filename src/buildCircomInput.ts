@@ -1,4 +1,4 @@
-import { IncrementalMerkleSumTree, MerkleProof } from 'pyt-merkle-sum-tree';
+import { MerkleSumTree, MerkleProof } from 'pyt-merkle-sum-tree';
 import { CircomInput } from './types/index';
 
 /**
@@ -9,7 +9,7 @@ import { CircomInput } from './types/index';
  * @returns The input for the Circom circuit
  */
 export default function buildCircomInput(
-  merkleSumTree: IncrementalMerkleSumTree,
+  merkleSumTree: MerkleSumTree,
   userIndex: number,
   assetsSum: bigint,
 ): CircomInput {

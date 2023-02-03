@@ -1,5 +1,5 @@
 import { SnarkProverArtifacts, FullProof, CircomInput } from './types';
-import { IncrementalMerkleSumTree, Entry } from 'pyt-merkle-sum-tree';
+import { MerkleSumTree, Entry } from 'pyt-merkle-sum-tree';
 import { groth16 } from 'snarkjs';
 import buildCircomInput from './buildCircomInput';
 
@@ -9,7 +9,7 @@ import buildCircomInput from './buildCircomInput';
  * The proof doesn't reveal any information such as the total balances of each users, the number of users and total amount of liabilities of the exchange.
  */
 export default class Prover {
-  private readonly _tree: IncrementalMerkleSumTree;
+  private readonly _tree: MerkleSumTree;
   private readonly _assetsSum: bigint;
   private readonly _proverArtifacts: SnarkProverArtifacts;
 
@@ -19,7 +19,7 @@ export default class Prover {
    * @param assetsSum The total assets owned by the exchange.
    * @param proverArtifacts The artifacts of the prover.
    */
-  constructor(tree: IncrementalMerkleSumTree, assetsSum: bigint, proverArtifacts: SnarkProverArtifacts) {
+  constructor(tree: MerkleSumTree, assetsSum: bigint, proverArtifacts: SnarkProverArtifacts) {
     this._tree = tree;
     this._assetsSum = assetsSum;
     this._proverArtifacts = proverArtifacts;
@@ -28,7 +28,7 @@ export default class Prover {
     Object.freeze(this);
   }
 
-  public get tree(): IncrementalMerkleSumTree {
+  public get tree(): MerkleSumTree {
     return this._tree;
   }
 

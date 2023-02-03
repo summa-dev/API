@@ -1,8 +1,9 @@
 import { Prover, UserVerifier, FullProof, SnarkProverArtifacts } from '../src/index';
-import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
+import { MerkleSumTree } from 'pyt-merkle-sum-tree';
 
 describe('pyt proof-of-solvency test', () => {
-  const tree = new IncrementalMerkleSumTree('./test/entries/entry-65536-valid.csv'); // The tree has 2**16 entries.
+  console.log('Generating the tree... (this may take a while)');
+  const tree = new MerkleSumTree('./test/entries/entry-65536-valid.csv'); // The tree has 2**16 entries.
   const liabilitiesSum = tree.root.sum;
 
   const pathToValidWasm = './test/artifacts/valid/pyt-pos-16.wasm';

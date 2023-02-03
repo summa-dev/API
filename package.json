@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "circomlibjs": "^0.0.8",
-    "pyt-merkle-sum-tree": "^0.0.19",
+    "pyt-merkle-sum-tree": "^0.0.21",
     "snarkjs": "^0.5.0"
   }
 }
