@@ -2,13 +2,13 @@
 
 pyt-pos is a library to generate and verify pan-y-tomate Proof of Solvency. 
 
-You only need to provide a csv file that contains the list of your users and their balance for a specific token. The library contains the apis to generate a proof of solvency for each user and verify it. 
+The library contains the apis to generate a proof of solvency for each user and let them verify it. 
 
 ```npm install pyt-pos```
 
 ```typescript
 import { Prover, UserVerifier } from 'pyt-pos';
-import { IncrementalMerkleSumTree } from 'pyt-merkle-sum-tree';
+import { MerkleSumTree } from 'pyt-merkle-sum-tree';
 ```
 
 `Prover` is a class that contains the core APis to let CEXs provide credible Proof Of Solvency to its users.
@@ -16,17 +16,17 @@ The proof doesn't reveal any information such as the total balances of each user
 
 `UserVerifier` is a class that contains the core APIs to let a user verify the proof that has been provided them by the exchange.
 
-`IncrementalMerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree).
+`MerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree).
 
 ## APIs - Prover 
 
-\# **new Prover**(tree: _IncrementalMerkleSumTree_, assetsSum _bigint_, proverArtifacts _SnarkProverArtifacts_): _Prover_
+\# **new Prover**(tree: _MerkleSumTree_, assetsSum _bigint_, proverArtifacts _SnarkProverArtifacts_): _Prover_
 
 ```typescript
 import { Prover } from "pyt-pos"
-import { IncrementalMerkleSumTree } from "pyt-merkle-sum-tree"
+import { MerkleSumTree } from "pyt-merkle-sum-tree"
 
-const tree = new IncrementalMerkleSumTree("test/entries/entry-16-valid.csv")
+const tree = new MerkleSumTree("test/entries/entry-16-valid.csv")
 
 const assetsSum = BigInt(4000000000)
 const pathToWasm = './test/artifacts/valid/pyt-pos-16.wasm'
