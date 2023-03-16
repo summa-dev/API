@@ -1,6 +1,6 @@
 # pyt-pos
 
-pyt-pos is a library to generate and verify pan-y-tomate Proof of Solvency. 
+pyt-pos is a library to generate and verify Proof of Solvency. 
 
 The library contains the apis to generate a proof of solvency for each user and let them verify it. 
 
@@ -16,7 +16,7 @@ The proof doesn't reveal any information such as the total balances of each user
 
 `UserVerifier` is a class that contains the core APIs to let a user verify the proof that has been provided to them by the exchange.
 
-`MerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/pan-y-tomate/pyt-merkle-sum-tree).
+`MerkleSumTree` is a class that contains the core methods to create a Merkle Sum Tree from a csv file containing the username and balances of its users. More information about Merkle Sum Tree can be found at [pyt-merkle-sum-tree](https://github.com/zk-safe-cex/pyt-merkle-sum-tree).
 
 ## APIs - Prover 
 
@@ -42,7 +42,7 @@ const prover = new Prover(tree, assetsSum, proverArtifacts)
 
 Initializes a prover object. Takes as input an instance of the Merkle Sum Tree, the total assets owned by the exchange and the zkSNARK prover artifacts.
 
-> The available prover artifacts generated after a trusted-setup can be found in the [pyt-circuits](https://github.com/pan-y-tomate/pyt-circuits#trusted-setup-artifcats) repository. For now, the trusted setup is only available for a merkle sum tree with 16 levels.
+> The available prover artifacts generated after a trusted-setup can be found in the [pyt-circuits](https://github.com/zk-safe-cex/pyt-circuits#trusted-setup-artifcats) repository. For now, the trusted setup is only available for a merkle sum tree with 16 levels.
 
 \# **generateProof**(userIndex _number_): _FullProof_
 
@@ -71,7 +71,7 @@ const userVerifier = new UserVerifier(username, balance, verificationKey)
 
 Initializes a user verifier object. Takes as input the username of the user, the balance of the user and the verification key.
 
-> The available verification key generated after a trusted-setup can be found in the [pyt-circuits](https://github.com/pan-y-tomate/pyt-circuits#trusted-setup-artifcats) repository. For now, the verification key is only available for a merkle sum tree with 16 levels.
+> The available verification key generated after a trusted-setup can be found in the [pyt-circuits](https://github.com/zk-safe-cex/pyt-circuits#trusted-setup-artifcats) repository. For now, the verification key is only available for a merkle sum tree with 16 levels.
 
 
 \# **verifyProof**(proof: _FullProof_): _boolean_
